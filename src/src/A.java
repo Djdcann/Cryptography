@@ -34,7 +34,11 @@ public class A {
 
 					if (bitsLeft > 0){
 						//change the LSB
-						rgb = (rgb & 0xfffffffe) | (toHide >> (--bitsLeft)) & 0x01;
+						rgb &= 0xfefefefe;
+						for (int i=3;i>=0;i--) {
+							int bit = (toHide >> (--bitsLeft)) & 0x01;
+							rgb |= bit << 8 * i;
+						}
 						outI.setRGB(x,y,rgb); // set the pixel of the output image to edited rgb
 					}else{
 						outI.setRGB(x,y,rgb); // set the pixel of the output image to new_rgb
@@ -67,7 +71,10 @@ public class A {
 					}
 
 					int rgb = inI.getRGB(x,y);	// (1) Getting RGB of a pixel (done)
-					hiddenNum |= ((rgb%2) & 0x01) << (--bitsLeft); // update the current bit
+					for (int i=3;i>=0;i--) {
+						int channel = (rgb >> i*8) & 0xFF;
+						hiddenNum |= (channel & 0x01) << (--bitsLeft); // update the current bit
+					}
 				}
 				if (bitsLeft == 0){
 					break;
