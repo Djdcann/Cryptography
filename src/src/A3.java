@@ -45,19 +45,28 @@ public class A3 {
 					int rgb = inI.getRGB(x,y);	// (1) Getting RGB of a pixel (done)
 
 					// NEED TO IMPLEMENT (2) (replace the 128,64,32 below)
-					int RED   = 128;
-					int GREEN = 64;
-					int BLUE  = 32;
+					int RED   = (rgb >> 16) & 0xFF;
+					int GREEN = (rgb >> 8) & 0xFF;
+					int BLUE  = (rgb) & 0xFF;
 
 					// NEED TO IMPLEMENT (3)
+					RED ^= (0x01 << 7);
+					GREEN ^= (0x01 << 7);
+					BLUE ^= (0x01 << 7);
 
 					// NEED TO IMPLEMENT (4)
+					RED |= (0x01 << 6);
+					GREEN |= (0x01 << 6);
+					BLUE |= (0x01 << 6);
 
 					// NEED TO IMPLEMENT (5)
+					RED &= ~(0x01 << 3);
+					GREEN &= ~(0x01 << 3);
+					BLUE &= ~(0x01 << 3);
 
 					// NEED TO IMPLEMENT (6) (replace the 0xffaa6633 value)
-					int new_rgb=0xffaa6633;
-
+					int new_rgb=0xff000000;
+					new_rgb |= (BLUE << 16) | (RED << 8) | (GREEN);
 
 					outI.setRGB(x,y,new_rgb); // set the pixel of the output image to new_rgb
 				}
