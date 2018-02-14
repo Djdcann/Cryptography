@@ -22,7 +22,8 @@ public class DiffieHellman {
         BigInteger KA = YB.modPow(XA, q);
         BigInteger KB = YA.modPow(XB, q);
 
-        System.out.println("\nUserA gets KA: " + KA + ", UserB gets KB: " + KB);
+        System.out.println("\nUserA gets KA: " + KA);
+        System.out.println("UserB gets KB: " + KB);
     }
 
     public static void main(String[] args){
