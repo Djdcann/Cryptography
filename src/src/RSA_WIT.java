@@ -1,4 +1,11 @@
+import java.math.BigInteger;
+
 public class RSA_WIT extends java.lang.Object{
+
+    private BigInteger p;
+    private BigInteger q;
+    private BigInteger public_key;
+
     public static void main(String[] args) {
 
         if( args.length != 3 ) {
@@ -20,5 +27,33 @@ public class RSA_WIT extends java.lang.Object{
         rsa.DecryptFile(args[1], args[2]);      // Decrypt file
 
         System.out.println("FINISHED");
+    }
+
+    public RSA_WIT(java.lang.String the_p,
+                   java.lang.String the_q,
+                   java.lang.String the_public_key){
+        this.p = new BigInteger(the_p);
+        this.q = new BigInteger(the_q);
+        this.public_key = new BigInteger(the_public_key);
+
+    }
+
+    public void EncryptFile(java.lang.String inf,
+                            java.lang.String outf){
+
+    }
+
+    public void DecryptFile(java.lang.String fname,
+                            java.lang.String outfile){
+
+    }
+
+    public void EncryptDecrypt(java.lang.String inf,
+                               java.lang.String outf){
+
+    }
+
+    public void PrintParameters(){
+        System.out.printf("P: {0}, Q: {1}, Public Key: {2}", p, q, public_key);
     }
 }
