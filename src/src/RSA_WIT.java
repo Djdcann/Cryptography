@@ -21,7 +21,7 @@ public class RSA_WIT {
             System.exit(-1);
         }
 
-        RSA_FAKE rsa = new RSA_FAKE("977447",  "649487", "6359");		// see the constructor for details.
+        RSA_WIT rsa = new RSA_WIT("977447",  "649487", "6359");		// see the constructor for details.
         //  p            q     publicKey
 
 
