@@ -1,5 +1,6 @@
 
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.io.*;
 
@@ -331,8 +332,22 @@ public class RSA_WIT {
 
         int w = 0;
         byte[] buffer = new byte[NB];
+        int p = 0;
         try {
+            p = (in.available()-1) % NB;
+            p +=1;
+        }catch (Exception e){
+            //yolo
+        }
+        byte [] pad = new byte[4];
+        for(int i=0; i < 4-1; i++)  {		 // insert the pad
+            pad[i] = (byte) 0;
+        }
+        pad[4-1] = (byte)p;
+        try {
+            Write_BigInteger_to_file(out, encrypt(new BigInteger(1, pad)));
             while( (w = in.read(buffer)) != 0 ) {
+
                 if( w == NB ) {
                     BigInteger message = new BigInteger(1, buffer);
                     BigInteger encrypt = encrypt(message);
@@ -444,13 +459,14 @@ public class RSA_WIT {
         byte [] tr = new byte[ss];		// modulus is 5 bytes (40 bits) - need one more byte
         // tr will hold (ss) number of bytes from the encrypted file.
         try {
-            int ret = -1;
+            byte[] pad = new byte[ss];
+            int ret = in.read(pad);
+            int padSize = decrypt(new BigInteger(pad)).intValue();
             while ( (ret = in.read(tr)) == ss ) {	// go in a loop and read (ss) number of bytes from the encrypted file.
                 BigInteger enc = new BigInteger(tr);	// convert the encrypted bytes into a BigInteger
                 BigInteger decrypt = decrypt(enc);	// Decrypt data
 
                 byte[] data = decrypt.toByteArray();	// Convert the decrypted BigInteger into an array of bytes
-
 
                 if( data.length > NB ) {				// dump only the last NB bytes
                     byte[] gg = new byte[NB];			// we encrypted the file using NB number of bytes
@@ -483,7 +499,16 @@ public class RSA_WIT {
                         out.write(gg); //dump
                     }
                     else {
-                        out.write(data);	// this is last thing we read
+                        if (data.length != padSize){
+                            byte [] gg = new byte[padSize];
+                            for(int r=0; r<padSize; r++)	gg[r] = (byte)0;
+                            for (int k=1; k<=data.length; k++){
+                                gg[padSize-k] = data[data.length-k];
+                            }
+                            out.write(gg);
+                        }else {
+                            out.write(data);    // this is last thing we read
+                        }
                     }
                 }
             }
