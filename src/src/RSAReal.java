@@ -195,19 +195,19 @@ public class RSAReal
                 else if (i != -1)
                 {
                     int j = 0;
-                    localObject = new byte[4];
+                    byte [] t = new byte[4];
 
                     int k = 4 - i;
                     for (j = 0; j < k; j++) {
-                        localObject[j] = 0;
+                        t[j] = 0;
                     }
 
                     for (int m = 0; m < i; j++)
                     {
-                        localObject[j] = arrayOfByte[m];m++;
+                        t[j] = arrayOfByte[m];m++;
                     }
 
-                    BigInteger localBigInteger2 = new BigInteger(1, (byte[])localObject);
+                    BigInteger localBigInteger2 = new BigInteger(1, t);
                     BigInteger localBigInteger3 = encrypt(localBigInteger2);
 
                     Write_BigInteger_to_file(localFileOutputStream, localBigInteger3);
