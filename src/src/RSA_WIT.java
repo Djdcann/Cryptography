@@ -459,6 +459,10 @@ public class RSA_WIT {
                     for(int r=0; r<NB; r++)	gg[r] = (byte)0;	// initialize array to all 0s
 
 
+                    for (int k = 1; k<=NB; k++) {
+                        gg[NB-k] = data[data.length-k];
+                    }
+
                     //
                     // *****  TODO *****
                     //
@@ -474,6 +478,14 @@ public class RSA_WIT {
 
 
                     if( in.available() > 0 ) {	// if there is more data in the encrypted file,
+                        byte[] gg = new byte[NB];
+                        for(int r=0; r<NB; r++)	gg[r] = (byte)0;	// initialize array to all 0s
+
+                        int k = 3;
+                        for (int m = data.length - 1; (k >= 0) && (m >= 0); m--) {
+                            gg[k] = data[m];k--;
+                        }
+                        out.write(gg);
                         //
                         // *****  TODO *****
                         //
