@@ -458,16 +458,10 @@ public class RSA_WIT {
                     // We will use only the last NB number of bytes.
                     for(int r=0; r<NB; r++)	gg[r] = (byte)0;	// initialize array to all 0s
 
-
-                    for (int k = 1; k<=NB; k++) {
+                    // Copy the last NB number of bytes from the data[] into the gg[]
+                    for (int k=1; k<=NB; k++) {
                         gg[NB-k] = data[data.length-k];
                     }
-
-                    //
-                    // *****  TODO *****
-                    //
-                    // Copy the last NB number of bytes from the data[] into the gg[]
-
 
                     out.write(gg);					// dump gg[] into the output file (these are the decrypted bytes.
                 }
@@ -481,22 +475,12 @@ public class RSA_WIT {
                         byte[] gg = new byte[NB];
                         for(int r=0; r<NB; r++)	gg[r] = (byte)0;	// initialize array to all 0s
 
-//                        for (int m = data.length - 1; (k >= 0) && (m >= 0); m--) {
-//                            gg[k] = data[m];
-//                            k--;
-//                        }
-
-                        for (int k=1;k<=data.length;k++){
+                        // Copy the last NB number of bytes from data[] into the newly created array.
+                        for (int k=1; k<=data.length; k++){
                             gg[NB-k] = data[data.length-k];
                         }
-                        out.write(gg);
-                        //
-                        // *****  TODO *****
-                        //
-                        // Create an array that can hold NB number of bytes
-                        // Initialize the array with 0s
-                        // Copy the last NB number of bytes from data[] into the newly created array.
-                        // Dump the newly created array into the file.
+
+                        out.write(gg); //dump
                     }
                     else {
                         out.write(data);	// this is last thing we read
