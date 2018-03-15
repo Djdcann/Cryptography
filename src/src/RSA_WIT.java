@@ -481,9 +481,13 @@ public class RSA_WIT {
                         byte[] gg = new byte[NB];
                         for(int r=0; r<NB; r++)	gg[r] = (byte)0;	// initialize array to all 0s
 
-                        int k = 3;
-                        for (int m = data.length - 1; (k >= 0) && (m >= 0); m--) {
-                            gg[k] = data[m];k--;
+//                        for (int m = data.length - 1; (k >= 0) && (m >= 0); m--) {
+//                            gg[k] = data[m];
+//                            k--;
+//                        }
+
+                        for (int k=1;k<=data.length;k++){
+                            gg[NB-k] = data[data.length-k];
                         }
                         out.write(gg);
                         //
