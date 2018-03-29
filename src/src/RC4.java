@@ -63,7 +63,7 @@ public class RC4 {
 
         // ENCRYPT
         rc4.ksa(state, key, PASS_size);
-        rc4.prga(state, "a.png", "b.png");
+        rc4.prga(state, "sample.png", "b.png");
 
         // DECRYPT
         rc4.ksa(state, key, PASS_size);
